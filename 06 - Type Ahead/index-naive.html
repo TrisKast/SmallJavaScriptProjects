@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State" id="search-input-field">
+    <ul class="suggestions" id="suggestionList">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+document.getElementById('search-input-field').addEventListener('input', fetch_suggestions)
+const suggestionList = document.getElementById("suggestionList");
+
+function fetch_suggestions(){
+
+  fetch(endpoint)
+  .then(res => res.json())
+  .then((out) => {
+
+    if(this.value != '' && out){
+      suggestionList.innerHTML=''
+      out_filtered = out.filter(element => element.city.toLowerCase().includes(this.value.toLowerCase()) || element.state.toLowerCase().includes(this.value.toLowerCase()))
+
+      out_filtered.forEach(element => {
+        var suggEle = document.createElement("li");
+        suggEle.appendChild(document.createTextNode(`${element.city}, ${element.state}`));
+        var populationSpan = document.createElement('span')
+        populationSpan.innerHTML = `${element.population}`;
+        populationSpan.classList.add("population");
+        suggEle.appendChild(populationSpan);
+        suggestionList.appendChild(suggEle);
+      });
+
+    }else{
+      suggestionList.innerHTML=''
+      var placeholder1 = document.createElement("li");
+      placeholder1.appendChild(document.createTextNode("Filter for a city"));
+      suggestionList.appendChild(placeholder1);
+      var placeholder2 = document.createElement("li");
+      placeholder2.appendChild(document.createTextNode("or a state"));
+      suggestionList.appendChild(placeholder2);
+    }
+
+
+
+    
+  })
+  .catch(err => { throw err })
+}
+
+
+
+
+
+</script>
+</body>
+</html>

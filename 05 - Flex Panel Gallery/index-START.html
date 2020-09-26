@@ -26,6 +26,7 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -34,8 +35,6 @@
       color: white;
       text-align: center;
       align-items: center;
-      /* Safari transitionend event.propertyName === flex */
-      /* Chrome + FF transitionend event.propertyName === flex-grow */
       transition:
         font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
         flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
@@ -43,19 +42,38 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex:1;
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
-    .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
-    .panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
-    .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
-    .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
-    .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+    #panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
+    #panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
+    #panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
+    #panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
+    #panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
 
     /* Flex Children */
     .panel > * {
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      flex: 1 0 auto;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel > *:first-child {transform: translateY(-100%);}
+    .panel > *:last-child {transform: translateY(100%);}
+
+    .mainframe > *:first-child {transform: translateY(0%);}
+    .mainframe > *:last-child {transform: translateY(0%);}
+
+    .mainframe {
+      flex: 5;
     }
 
     .panel p {
@@ -77,27 +95,27 @@
 
 
   <div class="panels">
-    <div class="panel panel1">
+    <div class="panel" id="panel1">
       <p>Hey</p>
       <p>Let's</p>
       <p>Dance</p>
     </div>
-    <div class="panel panel2">
+    <div class="panel" id="panel2">
       <p>Give</p>
       <p>Take</p>
       <p>Receive</p>
     </div>
-    <div class="panel panel3">
+    <div class="panel" id="panel3">
       <p>Experience</p>
       <p>It</p>
       <p>Today</p>
     </div>
-    <div class="panel panel4">
+    <div class="panel" id="panel4">
       <p>Give</p>
       <p>All</p>
       <p>You can</p>
     </div>
-    <div class="panel panel5">
+    <div class="panel" id="panel5">
       <p>Life</p>
       <p>In</p>
       <p>Motion</p>
@@ -105,6 +123,19 @@
   </div>
 
   <script>
+
+    function toggle_mainframe(){
+      panels.forEach(panel => {
+        if(panel != this){
+          panel.classList.remove("mainframe")
+        }
+      });
+      this.classList.toggle("mainframe");
+    }
+
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(panel => {panel.addEventListener('click', toggle_mainframe)})
+
 
   </script>
 

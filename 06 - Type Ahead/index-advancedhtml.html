@@ -19,7 +19,7 @@ const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb
 
 const cities = [];
 fetch(endpoint)
-  .then(blob => blob.json())
+  .then(res => res.json())
   .then(data => cities.push(...data));
 
 function findMatches(wordToMatch, cities) {
@@ -53,8 +53,8 @@ function displayMatches() {
 const searchInput = document.querySelector('.search');
 const suggestions = document.querySelector('.suggestions');
 
-searchInput.addEventListener('change', displayMatches);
-searchInput.addEventListener('keyup', displayMatches);
+searchInput.addEventListener('input', displayMatches);
+
 
 </script>
   </body>
