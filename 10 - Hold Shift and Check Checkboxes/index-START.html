@@ -96,6 +96,31 @@
   </div>
 
 <script>
+
+  const checkboxes = Array.from(document.querySelectorAll("input[type=checkbox]"))
+
+  // Start at the just pressed checkbox and walk backwards through the list of checkboxes to find the last as well checked box
+  function find_last_checked_box(inputList, index){
+    for(let i = 1; i++; index-i < 0){
+      if(inputList[index-i].checked == true) return index-i
+    }
+  }
+
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click',(e) => {
+    if (checkbox.checked && e.shiftKey){
+      // Get index of just clicked checkbox 
+      const currIndex = checkboxes.indexOf(checkbox);
+
+      // Get index of first previous item which is checked as well
+      const lastcheckedBoxIndex = find_last_checked_box(checkboxes, currIndex)
+
+      // Mark all items in between as checked as well
+      checkboxes.forEach(checkbox => {
+        if (checkboxes.indexOf(checkbox) > lastcheckedBoxIndex && checkboxes.indexOf(checkbox) < currIndex) checkbox.checked = true;
+      })
+    }
+  }))
+
 </script>
 </body>
 </html>
