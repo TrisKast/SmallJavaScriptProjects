@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+  
+  const pressedKeys = []
+  const KonamiCode = ['ArrowDown','ArrowDown','ArrowUp','ArrowUp','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','KeyB','KeyA']
+
+  window.addEventListener('keydown', (e) => {
+    
+    if (pressedKeys.length > 5) pressedKeys.shift();
+    pressedKeys.push(e.code);
+
+    if(pressedKeys == KonamiCode) cornify_add();
+  })
+  
+
+</script>
+</body>
+</html>
