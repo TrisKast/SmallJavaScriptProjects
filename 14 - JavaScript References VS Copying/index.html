@@ -8,47 +8,71 @@
 
   <script>
     // start with strings, numbers and booleans
+    let age = 100;
+    let age_copy = age;
+    console.log(age, age_copy);
+    age = 200;
+    console.log(age, age_copy);
+
+    let name = 'Tris';
+    let name_copy = name;
+    console.log(name, name_copy);
+    name = 'Tristan';
+    console.log(name, name_copy);
 
     // Let's say we have an array
-    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+    const players = ['Leona', 'Vayne', 'Ryze', 'Poppy'];
 
     // and we want to make a copy of it.
-
     // You might think we can just do something like this:
+    const team = players;
+    console.log(players, team);
 
     // however what happens when we update that array?
+    team[3] = 'Jax';
 
     // now here is the problem!
+    console.log(players, team);
 
     // oh no - we have edited the original array too!
-
     // Why? It's because that is an array reference, not an array copy. They both point to the same array!
-
     // So, how do we fix this? We take a copy instead!
 
     // one way
-
+    const newTeam = players.slice();
     // or create a new array and concat the old one in
+    const newTeam_2 = [].concat(players)
 
     // or use the new ES6 Spread
+    const newTeam_ES6 = [...players]
 
     // now when we update it, the original one isn't changed
+    newTeam_ES6[1] = 'Nautilus'
+    console.log(players, newTeam_ES6);
+
 
     // The same thing goes for objects, let's say we have a person object
 
     // with Objects
-    const person = {
-      name: 'Wes Bos',
-      age: 80
+    const center = {
+      name: 'Nikola Jokic',
+      age: 100
     };
 
     // and think we make a copy:
+    const shootingGuard = center;
+    shootingGuard.name = 'James Harden'
+    console.log(center,shootingGuard);
 
     // how do we take a copy instead?
+    const pointGuard = Object.assign({}, center, { age: 200 });
+    console.log(center, pointGuard);
 
     // We will hopefully soon see the object ...spread
+    const rookie = {...center};
 
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    // Hacky: Using JSON
+    const coach = JSON.parse(JSON.stringify(center));
 
   </script>
 
