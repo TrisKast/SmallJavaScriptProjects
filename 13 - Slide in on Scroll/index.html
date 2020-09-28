@@ -43,7 +43,10 @@
   </div>
 
   <script>
-    function debounce(func, wait = 20, immediate = true) {
+
+    const allSlideIns = document.querySelectorAll('.slide-in')
+
+    function debounce(func, wait = 10, immediate = true) {
       var timeout;
       return function() {
         var context = this, args = arguments;
@@ -56,27 +59,20 @@
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
       };
-    };
-
-    const sliderImages = document.querySelectorAll('.slide-in');
-
-    function checkSlide() {
-      sliderImages.forEach(sliderImage => {
-        // half way through the image
-        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
-        // bottom of the image
-        const imageBottom = sliderImage.offsetTop + sliderImage.height;
-        const isHalfShown = slideInAt > sliderImage.offsetTop;
-        const isNotScrolledPast = window.scrollY < imageBottom;
-        if (isHalfShown && isNotScrolledPast) {
-          sliderImage.classList.add('active');
-        } else {
-          sliderImage.classList.remove('active');
-        }
-      });
     }
 
-    window.addEventListener('scroll', debounce(checkSlide));
+    // Use debounce to regulate/limit the event execution
+    window.onscroll = debounce(function (e) {  
+      allSlideIns.forEach(slideIn => {
+
+        const pictureMiddle = (slideIn.offsetTop + slideIn.offsetHeight)/2
+
+        // On each scroll check the remaining distance from the current viewpoint to the start of every picture
+        if(slideIn.offsetTop - window.pageYOffset < 400){
+          slideIn.classList.add('active')
+        }
+      })
+    })
 
   </script>
 
