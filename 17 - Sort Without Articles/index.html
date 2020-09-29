@@ -6,6 +6,7 @@
 </head>
 <body>
 
+
   <style>
     body {
       margin: 0;
@@ -48,6 +49,23 @@
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+// Sort data according to the band name without articles
+const sortedBands = bands.sort((a, b) => {
+  // Using multiple replace statement
+  //return a.replace('The ','').replace('A ','').replace('An ','') > b.replace('The ','').replace('A ','').replace('An ','');
+
+  // Use regular expression
+  return a.replace(/^(a |an |the )/i, '') > b.replace(/^(a |an |the )/i, '');
+});
+
+
+// Append each band to the output list
+// Can also be done by manipulatint the innerHTML property of the ul element
+sortedBands.forEach(band => {
+  var li = document.createElement("li");
+  li.appendChild(document.createTextNode(band));
+  document.getElementById('bands').appendChild(li);
+})
 
 </script>
 
