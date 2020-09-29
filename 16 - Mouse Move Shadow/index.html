@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 id="hero" contenteditable>🔥WOAH!</h1>
+  </div>
+
+  <style>
+  html {
+    color: black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+
+  h1 {
+    text-shadow: 10px 10px 0 rgba(0,0,0,1);
+    font-size: 100px;
+  }
+  </style>
+
+<script>
+
+
+// Compute the very center of the element
+function element_center(el) {
+    var rect = el.getBoundingClientRect(),
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return {  coordX: Math.round(rect.left + scrollLeft)+(el.offsetWidth/2), coordY: Math.round(rect.top + scrollTop)+(el.offsetHeight/2) }
+}
+
+function handle_shadow(e){
+
+  // Compute shadow offset
+  const shadowOffSetX = Math.abs((element_center(element).coordX - e.clientX)/2)
+  const shadowOffSetY = Math.abs((element_center(element).coordY - e.clientY)/2)
+
+  // Set different shadows according to the offset
+  element.style.textShadow =`
+                              ${shadowOffSetX}px ${shadowOffSetY}px 0 rgba(255, 0, 255, 0.7),
+                              -${shadowOffSetX}px -${shadowOffSetY}px 0 rgba(0, 255, 255, 0.7),
+                              -${shadowOffSetX}px ${shadowOffSetY}px 0 rgba(255, 255, 0, 0.7),
+                              ${shadowOffSetX}px -${shadowOffSetY}px 0 rgba(255, 0, 0, 0.7)
+                            `;
+
+
+}
+
+const element = document.querySelector('#hero');
+window.addEventListener('mousemove', handle_shadow);
+
+</script>
+</body>
+</html>
