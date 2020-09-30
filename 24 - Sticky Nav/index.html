@@ -44,13 +44,17 @@
   </div>
 
   <script>
-    // Not a ton of code, but hard to
+    
     const nav = document.querySelector('#main');
+
+    // Needs to be definded outside of the event listener since this value will change while moving
     let topOfNav = nav.offsetTop;
 
-    function fixNav() {
+    function checkNavBar() {
       if (window.scrollY >= topOfNav) {
+        // Add padding to prevent that little jump when taking the navbar out of the elemnt flow
         document.body.style.paddingTop = nav.offsetHeight + 'px';
+        // Add the class to the body so that multiple elements can be addresed further downstream the element tree
         document.body.classList.add('fixed-nav');
       } else {
         document.body.classList.remove('fixed-nav');
@@ -58,7 +62,8 @@
       }
     }
 
-    window.addEventListener('scroll', fixNav);
+
+    window.onscroll = function() {checkNavBar()};
 
   </script>
 
