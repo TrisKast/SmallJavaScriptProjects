@@ -16,19 +16,64 @@
   <div class="wrapper">
     <h2>LOCAL TAPAS</h2>
     <p></p>
-    <ul class="plates">
+    <ul class="plates" id="plates">
       <li>Loading Tapas...</li>
     </ul>
-    <form class="add-items">
-      <input type="text" name="item" placeholder="Item Name" required>
+    <form class="add-items" id="inputForm">
+      <input type="text" name="item" id="inputField" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
   </div>
 
 <script>
-  const addItems = document.querySelector('.add-items');
-  const itemsList = document.querySelector('.plates');
-  const items = [];
+
+  function prepopulate_list(){
+      // Fetch the current list of stored items
+      const alreadySavedItemsString = localStorage.getItem('items')
+      if (alreadySavedItemsString){
+        platesList.innerHTML = alreadySavedItemsString;
+      }
+    }
+
+
+  function process_input(e){
+    // Prevent the page from reloading after submitting
+    e.preventDefault()
+
+    // Get current list of items
+    const listItems = platesList.getElementsByTagName("li")
+
+    // Check if the first entry is the placeholder. If so, delete it since we are going to add an entry
+    if(listItems[0].innerHTML == 'Loading Tapas...'){
+      platesList.innerHTML = '';
+    }
+
+    // Concat the code for the new item in string form to the list
+    platesList.innerHTML = platesList.innerHTML.concat(
+      `
+        <li>
+          <input type="checkbox" id="cb-${listItems.length+1}">
+          <label class="label" for="cb-${listItems.length+1}" >${inputField.value}</label>
+        </li<>
+      `
+    )
+
+
+    // Save the itemnames into the local storage
+    localStorage.setItem('items', platesList.innerHTML)
+    
+    //Clear the form
+    inputForm.reset()
+  }
+
+
+  const inputForm = document.querySelector('#inputForm');
+  const platesList = document.querySelector('#plates');
+  const inputField = document.querySelector('#inputField');
+  inputForm.addEventListener('submit', process_input);
+
+  prepopulate_list();
+
 
 </script>
 
